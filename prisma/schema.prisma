@@ -1,0 +1,171 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  email String @unique
+  phoneNumber String @unique
+  hash String
+  role Role @default(ASSOCIATE)
+  isDeleted Boolean @default(false)
+
+  firstName String
+  lastName String
+  address String?
+
+  appointments Appointment[]
+
+  @@map("users")
+}
+
+enum Role {
+  ASSOCIATE
+  MANAGER
+  ADMIN
+}
+
+model Customer {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  email String @unique
+  phoneNumber String @unique
+  isDeleted Boolean @default(false)
+
+  firstName String
+  lastName String
+
+  pets Pet[]
+  appointments Appointment[]
+  
+  @@map("customers")
+}
+
+model Pet {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  name String
+  type Type @default(DOG)
+  birthday DateTime
+  weight Float
+  groomRating GroomRating @default(NEUTRAL)
+  rabiesDue DateTime?
+  isDeleted Boolean @default(false)
+
+  ownerId String
+  customer Customer @relation(fields:[ownerId], references:[id])
+  breedId String
+  breed Breed @relation(fields: [breedId], references: [id])
+
+  appointments Appointment[]
+
+  @@map("pets")
+}
+
+enum Type {
+  DOG
+  CAT
+}
+
+enum GroomRating {
+  PREFERRED
+  NEUTRAL
+  CAUTION
+}
+
+model Breed {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  name String
+  type Type @default(DOG)
+  coefficient Float @default(1)
+  isDeleted Boolean @default(false)
+
+  pets Pet[]
+  
+  @@map("breeds")
+}
+
+model Appointment {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  appointmentTime DateTime
+  status AppointmentStatus @default(INCOMING)
+  duration Float @default(2)
+  totalPrice Float @default(0)
+  isDeleted Boolean @default(false)
+
+  customerId String
+  customer Customer @relation(fields:[customerId], references:[id])
+  petId String
+  pet Pet @relation(fields:[petId], references:[id])
+  associateId String
+  associate User @relation(fields:[associateId], references:[id])
+  baseServiceId String
+  baseService Service @relation(fields:[baseServiceId], references:[id])
+
+  addons Addon[]
+
+  @@map("appointments")
+}
+
+enum AppointmentStatus {
+  INCOMING
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELLED
+}
+
+model Service {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  name String
+  nameAbbrev String
+  basePrice Float
+  isDeleted Boolean @default(false)
+
+  appointments Appointment[]
+  
+  @@map("services")
+}
+
+model Addon {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks String?
+
+  name String
+  nameAbbrev String
+  basePrice Float
+  isDeleted Boolean @default(false)
+
+  appointments Appointment[]
+  
+  @@map("addons")
+}
