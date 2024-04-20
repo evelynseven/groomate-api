@@ -126,7 +126,7 @@ model Appointment {
   baseServiceId String
   baseService Service @relation(fields:[baseServiceId], references:[id])
 
-  addons Addon[]
+  addOns AddOn[]
 
   @@map("appointments")
 }
@@ -154,7 +154,7 @@ model Service {
   @@map("services")
 }
 
-model Addon {
+model AddOn {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -162,10 +162,10 @@ model Addon {
 
   name String
   nameAbbrev String
-  basePrice Float
+  price Float
   isDeleted Boolean @default(false)
 
   appointments Appointment[]
   
-  @@map("addons")
+  @@map("addOns")
 }
