@@ -61,7 +61,7 @@ model Pet {
   remarks String?
 
   name String
-  type Type @default(DOG)
+  type BreedType @default(DOG)
   birthday DateTime
   weight Float
   groomRating GroomRating @default(NEUTRAL)
@@ -78,7 +78,7 @@ model Pet {
   @@map("pets")
 }
 
-enum Type {
+enum BreedType {
   DOG
   CAT
 }
@@ -96,7 +96,7 @@ model Breed {
   remarks String?
 
   name String
-  type Type @default(DOG)
+  type BreedType @default(DOG)
   coefficient Float @default(1)
   isDeleted Boolean @default(false)
 
