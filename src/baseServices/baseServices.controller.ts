@@ -9,26 +9,31 @@ import {
 } from '@nestjs/common';
 import { BaseServicesService } from './baseServices.service';
 import { BaseServiceDto } from './dto/index';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('services')
 export class BaseServicesController {
   constructor(private readonly baseServicesService: BaseServicesService) {}
 
+  @ApiOkResponse({ type: BaseServiceDto })
   @Post()
   create(@Body() baseServiceDto: BaseServiceDto) {
     return this.baseServicesService.create(baseServiceDto);
   }
 
+  @ApiOkResponse({ type: BaseServiceDto })
   @Get()
   findAll() {
     return this.baseServicesService.findAll();
   }
 
+  @ApiOkResponse({ type: BaseServiceDto })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.baseServicesService.findOne(id);
   }
 
+  @ApiOkResponse({ type: BaseServiceDto })
   @Put(':id')
   update(@Param('id') id: string, @Body() baseServiceDto: BaseServiceDto) {
     return this.baseServicesService.update(id, baseServiceDto);

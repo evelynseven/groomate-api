@@ -9,26 +9,31 @@ import {
 } from '@nestjs/common';
 import { BreedsService } from './breeds.service';
 import { BreedDto } from './dto/index';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('breeds')
 export class BreedsController {
   constructor(private readonly breedsService: BreedsService) {}
 
+  @ApiOkResponse({ type: BreedDto })
   @Post()
   create(@Body() breedDto: BreedDto) {
     return this.breedsService.create(breedDto);
   }
 
+  @ApiOkResponse({ type: BreedDto })
   @Get()
   findAll() {
     return this.breedsService.findAll();
   }
 
+  @ApiOkResponse({ type: BreedDto })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.breedsService.findOne(id);
   }
 
+  @ApiOkResponse({ type: BreedDto })
   @Put(':id')
   update(@Param('id') id: string, @Body() breedDto: BreedDto) {
     return this.breedsService.update(id, breedDto);

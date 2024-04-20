@@ -9,11 +9,14 @@ import {
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentDto } from './dto/index';
+import { ApiOkResponse } from '@nestjs/swagger';
 
+@ApiOkResponse({ type: AppointmentDto })
 @Controller('customers/:customerId/appointments')
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
+  @ApiOkResponse({ type: AppointmentDto })
   @Post()
   create(
     @Param('customerId') customerId: string,
@@ -26,16 +29,19 @@ export class AppointmentsController {
     );
   }
 
+  @ApiOkResponse({ type: AppointmentDto })
   @Get()
   findAll(@Param('customerId') customerId: string) {
     return this.appointmentsService.findAll(customerId);
   }
 
+  @ApiOkResponse({ type: AppointmentDto })
   @Get(':id')
   findOne(@Param('customerId') customerId: string, @Param('id') id: string) {
     return this.appointmentsService.findOne(customerId, id);
   }
 
+  @ApiOkResponse({ type: AppointmentDto })
   @Put(':id')
   update(
     @Param('customerId') customerId: string,
