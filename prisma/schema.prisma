@@ -18,7 +18,7 @@ model User {
   phoneNumber String @unique
   hash String
   role Role @default(ASSOCIATE)
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   firstName String
   lastName String
@@ -43,7 +43,7 @@ model Customer {
 
   email String @unique
   phoneNumber String @unique
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   firstName String
   lastName String
@@ -66,7 +66,7 @@ model Pet {
   weight Float
   groomRating GroomRating @default(NEUTRAL)
   rabiesDue DateTime?
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   ownerId String
   customer Customer @relation(fields:[ownerId], references:[id])
@@ -98,7 +98,7 @@ model Breed {
   name String
   type BreedType @default(DOG)
   coefficient Float @default(1)
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   pets Pet[]
   
@@ -115,7 +115,7 @@ model Appointment {
   status AppointmentStatus @default(INCOMING)
   duration Float @default(2)
   totalPrice Float @default(0)
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   customerId String
   customer Customer @relation(fields:[customerId], references:[id])
@@ -147,7 +147,7 @@ model Service {
   name String
   nameAbbrev String
   basePrice Float
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   appointments Appointment[]
   
@@ -163,7 +163,7 @@ model AddOn {
   name String
   nameAbbrev String
   price Float
-  isDeleted Boolean @default(false)
+  isActive Boolean @default(true)
 
   appointments Appointment[]
   

@@ -52,6 +52,25 @@ export class AddOnServicesService {
     });
   }
 
+  async deactivate(id: string) {
+    const addOnService = await this.prisma.addOn.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!addOnService) throw new ForbiddenException('Cannot find the add-on');
+
+    await this.prisma.addOn.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
+  }
+
   async remove(id: string) {
     const addOnService = await this.prisma.addOn.findUnique({
       where: {

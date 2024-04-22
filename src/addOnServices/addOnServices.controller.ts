@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Patch,
 } from '@nestjs/common';
 import { AddOnServicesService } from './addOnServices.service';
 import { AddOnServiceDto } from './dto/index';
@@ -37,6 +38,11 @@ export class AddOnServicesController {
   @Put(':id')
   update(@Param('id') id: string, @Body() addOnServiceDto: AddOnServiceDto) {
     return this.addOnServicesService.update(id, addOnServiceDto);
+  }
+
+  @Patch(':id')
+  deactivate(@Param('id') id: string) {
+    return this.addOnServicesService.deactivate(id);
   }
 
   @Delete(':id')

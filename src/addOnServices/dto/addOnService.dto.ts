@@ -15,4 +15,7 @@ export class AddOnServiceDto {
 
   @ApiProperty({ example: 15.0 })
   price: number;
+
+  @ApiProperty({ example: false })
+  isDeleted: boolean;
 }
