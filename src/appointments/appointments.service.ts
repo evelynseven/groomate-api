@@ -29,7 +29,51 @@ export class AppointmentsService {
     return appointment;
   }
 
-  findAll(customerId: string) {
+  async findAll() {
+    try {
+      const appointments = await this.prisma.appointment.findMany({
+        include: {
+          customer: {
+            select: {
+              fullName: true,
+            },
+          },
+          pet: {
+            select: {
+              name: true,
+            },
+          },
+          associate: {
+            select: {
+              fullName: true,
+            },
+          },
+        },
+      });
+
+      const appointmentsWithNames = appointments.map((appointment) => ({
+        ...appointment,
+        customer: appointment.customer.fullName,
+        pet: appointment.pet.name,
+        associate: appointment.associate.fullName,
+      }));
+      return appointmentsWithNames;
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
+
+    // const appointmentsWithUserNames = await this.prisma.appointment.findMany({
+    //   include: {
+    //     customer: {
+    //       select: {
+    //         fullName: true,
+    //       },
+    //     },
+    //   },
+    // });
+  }
+
+  findAllByCustomer(customerId: string) {
     return this.prisma.appointment.findMany({
       where: {
         customerId: customerId,
@@ -37,7 +81,7 @@ export class AppointmentsService {
     });
   }
 
-  findOne(customerId: string, id: string) {
+  findOneByCustomer(customerId: string, id: string) {
     return this.prisma.appointment.findFirst({
       where: {
         customerId: customerId,

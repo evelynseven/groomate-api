@@ -5,7 +5,10 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const cors = require('cors');
+
   app.useGlobalPipes(new ValidationPipe());
+  app.use(cors());
 
   const config = new DocumentBuilder()
     .setTitle('Groomate APIs')

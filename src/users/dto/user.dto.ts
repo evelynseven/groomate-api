@@ -7,6 +7,9 @@ export class UserDto {
   @ApiProperty({ example: 'S' })
   lastName: string;
 
+  @ApiProperty({ example: 'Aaron S' })
+  fullName: string;
+
   @ApiProperty({ example: '437 340 7590' })
   phoneNumber: string;
 

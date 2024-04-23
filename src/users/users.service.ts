@@ -13,6 +13,7 @@ export class UsersService {
       data: {
         firstName: userDto.firstName,
         lastName: userDto.lastName,
+        fullName: `${userDto.firstName} ${userDto.lastName}`,
         phoneNumber: userDto.phoneNumber,
         hash: encryptedPwd,
         email: userDto.email,

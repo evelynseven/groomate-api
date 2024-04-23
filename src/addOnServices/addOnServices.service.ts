@@ -66,7 +66,7 @@ export class AddOnServicesService {
         id: id,
       },
       data: {
-        isDeleted: true,
+        isActive: true,
       },
     });
   }

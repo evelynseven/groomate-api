@@ -12,12 +12,12 @@ import { AppointmentDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 @ApiOkResponse({ type: AppointmentDto })
-@Controller('customers/:customerId/appointments')
+@Controller()
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Post()
+  @Post('customers/:customerId/appointments')
   create(
     @Param('customerId') customerId: string,
     @Body() appointmentDto: AppointmentDto,
@@ -30,19 +30,28 @@ export class AppointmentsController {
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Get()
-  findAll(@Param('customerId') customerId: string) {
-    return this.appointmentsService.findAll(customerId);
+  @Get('appointments')
+  findAll() {
+    return this.appointmentsService.findAll();
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Get(':id')
-  findOne(@Param('customerId') customerId: string, @Param('id') id: string) {
-    return this.appointmentsService.findOne(customerId, id);
+  @Get('customers/:customerId/appointments')
+  findAllByCustomer(@Param('customerId') customerId: string) {
+    return this.appointmentsService.findAllByCustomer(customerId);
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Put(':id')
+  @Get('customers/:customerId/appointments/:id')
+  findOneByCustomer(
+    @Param('customerId') customerId: string,
+    @Param('id') id: string,
+  ) {
+    return this.appointmentsService.findOneByCustomer(customerId, id);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
+  @Put('customers/:customerId/appointments/:id')
   update(
     @Param('customerId') customerId: string,
     @Param('id') id: string,
@@ -51,7 +60,7 @@ export class AppointmentsController {
     return this.appointmentsService.update(customerId, id, appointmentDto);
   }
 
-  @Delete(':id')
+  @Delete('customers/:customerId/appointments/:id')
   remove(@Param('customerId') customerId: string, @Param('id') id: string) {
     return this.appointmentsService.remove(customerId, id);
   }

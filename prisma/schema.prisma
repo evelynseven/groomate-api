@@ -22,6 +22,7 @@ model User {
 
   firstName String
   lastName String
+  fullName  String?
   address String?
 
   appointments Appointment[]
@@ -47,6 +48,7 @@ model Customer {
 
   firstName String
   lastName String
+  fullName  String?
 
   pets Pet[]
   appointments Appointment[]
