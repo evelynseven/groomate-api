@@ -11,7 +11,13 @@ export class AppointmentsService {
     associateId: string,
     appointmentDto: AppointmentDto,
   ) {
-    const addOns = appointmentDto.addOns.map((addOn) => ({ id: addOn.id }));
+    let addOns = [];
+    if (appointmentDto.addOns) {
+      addOns = appointmentDto.addOns.map((addOn) => ({ id: addOn.id }));
+    }
+    const date = new Date(appointmentDto.appointmentTime);
+    const isoString = date.toISOString();
+    console.log(isoString);
 
     const appointment = await this.prisma.appointment.create({
       data: {
@@ -49,6 +55,9 @@ export class AppointmentsService {
             },
           },
         },
+        orderBy: {
+          appointmentTime: 'asc',
+        },
       });
 
       const appointmentsWithNames = appointments.map((appointment) => ({
@@ -61,22 +70,15 @@ export class AppointmentsService {
     } catch (error) {
       console.error('Error fetching appointments:', error);
     }
-
-    // const appointmentsWithUserNames = await this.prisma.appointment.findMany({
-    //   include: {
-    //     customer: {
-    //       select: {
-    //         fullName: true,
-    //       },
-    //     },
-    //   },
-    // });
   }
 
   findAllByCustomer(customerId: string) {
     return this.prisma.appointment.findMany({
       where: {
         customerId: customerId,
+      },
+      orderBy: {
+        appointmentTime: 'asc',
       },
     });
   }

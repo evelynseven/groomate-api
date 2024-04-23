@@ -28,6 +28,9 @@ export class PetsService {
       where: {
         ownerId: customerId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 

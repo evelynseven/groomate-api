@@ -11,6 +11,7 @@ export class CustomersService {
       data: {
         firstName: customerDto.firstName,
         lastName: customerDto.lastName,
+        fullName: `${customerDto.firstName} ${customerDto.lastName}`,
         phoneNumber: customerDto.phoneNumber,
         email: customerDto.email,
         remarks: customerDto.remarks,
@@ -20,7 +21,11 @@ export class CustomersService {
   }
 
   findAll() {
-    return this.prisma.customer.findMany();
+    return this.prisma.customer.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {

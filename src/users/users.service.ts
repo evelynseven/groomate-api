@@ -26,7 +26,11 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.user.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
     users.map((user) => {
       delete user.hash;
     });
