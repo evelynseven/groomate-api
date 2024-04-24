@@ -10,6 +10,8 @@ export class BreedsService {
     const breed = await this.prisma.breed.create({
       data: {
         name: breedDto.name,
+        type: breedDto.type,
+        coefficient: breedDto.coefficient,
         remarks: breedDto.remarks,
       },
     });
@@ -17,7 +19,11 @@ export class BreedsService {
   }
 
   findAll() {
-    return this.prisma.breed.findMany();
+    return this.prisma.breed.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {
@@ -43,6 +49,8 @@ export class BreedsService {
       },
       data: {
         name: breedDto.name,
+        type: breedDto.type,
+        coefficient: breedDto.coefficient,
         remarks: breedDto.remarks,
       },
     });

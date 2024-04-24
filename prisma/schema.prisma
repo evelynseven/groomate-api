@@ -98,8 +98,8 @@ model Breed {
   remarks String?
 
   name String
-  type BreedType @default(DOG)
-  coefficient Float @default(1)
+  type BreedType
+  coefficient Float 
   isActive Boolean @default(true)
 
   pets Pet[]

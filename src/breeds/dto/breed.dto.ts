@@ -11,6 +11,6 @@ export class BreedDto {
   @ApiProperty({ example: 'CAT' })
   type: BreedType;
 
-  @ApiProperty({ example: 1 })
+  @ApiProperty({ example: 1.0 })
   coefficient: number;
 }

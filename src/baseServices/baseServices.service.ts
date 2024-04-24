@@ -19,7 +19,11 @@ export class BaseServicesService {
   }
 
   findAll() {
-    return this.prisma.service.findMany();
+    return this.prisma.service.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {

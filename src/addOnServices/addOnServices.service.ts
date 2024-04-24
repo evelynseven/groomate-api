@@ -19,7 +19,11 @@ export class AddOnServicesService {
   }
 
   findAll() {
-    return this.prisma.addOn.findMany();
+    return this.prisma.addOn.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {
