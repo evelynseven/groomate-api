@@ -6,11 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class AppointmentsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(
-    customerId: string,
-    associateId: string,
-    appointmentDto: AppointmentDto,
-  ) {
+  async create(customerId: string, appointmentDto: AppointmentDto) {
     let addOns = [];
     if (appointmentDto.addOns) {
       addOns = appointmentDto.addOns.map((addOn) => ({ id: addOn.id }));
@@ -26,7 +22,7 @@ export class AppointmentsService {
 
         customerId: customerId,
         petId: appointmentDto.petId,
-        associateId: associateId,
+        associateId: appointmentDto.associateId,
         baseServiceId: appointmentDto.baseServiceId,
 
         addOns: { connect: addOns },

@@ -22,11 +22,7 @@ export class AppointmentsController {
     @Param('customerId') customerId: string,
     @Body() appointmentDto: AppointmentDto,
   ) {
-    return this.appointmentsService.create(
-      customerId,
-      '85d3b00f-546e-43b1-ac86-c8e437fc207e',
-      appointmentDto,
-    );
+    return this.appointmentsService.create(customerId, appointmentDto);
   }
 
   @ApiOkResponse({ type: AppointmentDto })
