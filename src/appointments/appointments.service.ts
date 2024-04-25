@@ -79,6 +79,14 @@ export class AppointmentsService {
     });
   }
 
+  findOne(id: string) {
+    return this.prisma.appointment.findFirst({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   findOneByCustomer(customerId: string, id: string) {
     return this.prisma.appointment.findFirst({
       where: {

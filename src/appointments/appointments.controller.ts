@@ -38,6 +38,12 @@ export class AppointmentsController {
   }
 
   @ApiOkResponse({ type: AppointmentDto })
+  @Get('appointments/:id')
+  findOne(@Param('id') id: string) {
+    return this.appointmentsService.findOne(id);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
   @Get('customers/:customerId/appointments/:id')
   findOneByCustomer(
     @Param('customerId') customerId: string,
