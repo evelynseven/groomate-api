@@ -23,19 +23,42 @@ export class PetsService {
     return pet;
   }
 
-  findAll(customerId: string) {
-    return this.prisma.pet.findMany({
-      where: {
-        ownerId: customerId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+  async findAll(customerId: string) {
+    try {
+      const pets = await this.prisma.pet.findMany({
+        where: {
+          ownerId: customerId,
+        },
+        include: {
+          breed: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+      const petsWithNames = pets.map((pet) => ({
+        ...pet,
+        breed: pet.breed.name,
+      }));
+      return petsWithNames;
+    } catch (error) {
+      console.error('Error fetching pets:', error);
+    }
   }
 
   findOne(customerId: string, id: string) {
     return this.prisma.pet.findFirst({
+      include: {
+        breed: {
+          select: {
+            name: true,
+          },
+        },
+      },
       where: {
         ownerId: customerId,
         id: id,

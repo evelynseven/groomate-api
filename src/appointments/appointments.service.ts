@@ -50,6 +50,11 @@ export class AppointmentsService {
               fullName: true,
             },
           },
+          baseService: {
+            select: {
+              name: true,
+            },
+          },
         },
         orderBy: {
           appointmentTime: 'asc',
@@ -61,6 +66,7 @@ export class AppointmentsService {
         customer: appointment.customer.fullName,
         pet: appointment.pet.name,
         associate: appointment.associate.fullName,
+        baseService: appointment.baseService.name,
       }));
       return appointmentsWithNames;
     } catch (error) {
@@ -68,32 +74,137 @@ export class AppointmentsService {
     }
   }
 
-  findAllByCustomer(customerId: string) {
-    return this.prisma.appointment.findMany({
-      where: {
-        customerId: customerId,
-      },
-      orderBy: {
-        appointmentTime: 'asc',
-      },
-    });
+  async findAllByCustomer(customerId: string) {
+    try {
+      const appointments = await this.prisma.appointment.findMany({
+        where: {
+          customerId: customerId,
+        },
+        include: {
+          customer: {
+            select: {
+              fullName: true,
+            },
+          },
+          pet: {
+            select: {
+              name: true,
+            },
+          },
+          associate: {
+            select: {
+              fullName: true,
+            },
+          },
+          baseService: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          appointmentTime: 'asc',
+        },
+      });
+      const appointmentsWithNames = appointments.map((appointment) => ({
+        ...appointment,
+        customer: appointment.customer.fullName,
+        pet: appointment.pet.name,
+        associate: appointment.associate.fullName,
+        baseService: appointment.baseService.name,
+      }));
+      return appointmentsWithNames;
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
   }
 
-  findOne(id: string) {
-    return this.prisma.appointment.findFirst({
-      where: {
-        id: id,
-      },
-    });
+  async findOne(id: string) {
+    try {
+      const appointment = await this.prisma.appointment.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          customer: {
+            select: {
+              fullName: true,
+            },
+          },
+          pet: {
+            select: {
+              name: true,
+            },
+          },
+          associate: {
+            select: {
+              fullName: true,
+            },
+          },
+          baseService: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      const appointmentWithNames = {
+        ...appointment,
+        customer: appointment.customer.fullName,
+        pet: appointment.pet.name,
+        associate: appointment.associate.fullName,
+        baseService: appointment.baseService.name,
+      };
+
+      return appointmentWithNames;
+    } catch (error) {
+      console.error('Error fetching appointment:', error);
+    }
   }
 
-  findOneByCustomer(customerId: string, id: string) {
-    return this.prisma.appointment.findFirst({
-      where: {
-        customerId: customerId,
-        id: id,
-      },
-    });
+  async findOneByCustomer(customerId: string, id: string) {
+    try {
+      const appointment = await this.prisma.appointment.findFirst({
+        where: {
+          customerId: customerId,
+          id: id,
+        },
+        include: {
+          customer: {
+            select: {
+              fullName: true,
+            },
+          },
+          pet: {
+            select: {
+              name: true,
+            },
+          },
+          associate: {
+            select: {
+              fullName: true,
+            },
+          },
+          baseService: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+      const appointmentWithNames = {
+        ...appointment,
+        customer: appointment.customer.fullName,
+        pet: appointment.pet.name,
+        associate: appointment.associate.fullName,
+        baseService: appointment.baseService.name,
+      };
+
+      return appointmentWithNames;
+    } catch (error) {
+      console.error('Error fetching appointment:', error);
+    }
   }
 
   async update(customerId: string, id: string, appointmentDto: AppointmentDto) {
