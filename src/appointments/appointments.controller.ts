@@ -58,8 +58,8 @@ export class AppointmentsController {
     return this.appointmentsService.update(id, appointmentDto);
   }
 
-  @Delete('customers/:customerId/appointments/:id')
-  remove(@Param('customerId') customerId: string, @Param('id') id: string) {
-    return this.appointmentsService.remove(customerId, id);
+  @Delete('appointments/:id')
+  remove(@Param('id') id: string) {
+    return this.appointmentsService.remove(id);
   }
 }

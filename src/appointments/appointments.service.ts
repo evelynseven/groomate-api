@@ -231,15 +231,14 @@ export class AppointmentsService {
     });
   }
 
-  async remove(customerId: string, id: string) {
+  async remove(id: string) {
     const appointment = await this.prisma.appointment.findUnique({
       where: {
-        customerId: customerId,
         id: id,
       },
     });
 
-    if (!appointment || appointment.customerId !== customerId)
+    if (!appointment)
       throw new ForbiddenException('Cannot find the appointment');
 
     await this.prisma.appointment.delete({
