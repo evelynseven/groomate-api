@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 
 export class UserDto {
   @ApiProperty({ example: 'Aaron' })
@@ -18,6 +19,9 @@ export class UserDto {
 
   @ApiProperty({ example: 'aarons@groomate.com' })
   email: string;
+
+  @ApiProperty({ example: 'ASSOCIATE' })
+  role: Role;
 
   @ApiProperty({ example: 'Toronto, CA' })
   address: string;
