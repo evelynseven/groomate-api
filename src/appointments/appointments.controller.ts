@@ -53,13 +53,9 @@ export class AppointmentsController {
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Put('customers/:customerId/appointments/:id')
-  update(
-    @Param('customerId') customerId: string,
-    @Param('id') id: string,
-    @Body() appointmentDto: AppointmentDto,
-  ) {
-    return this.appointmentsService.update(customerId, id, appointmentDto);
+  @Put('appointments/:id')
+  update(@Param('id') id: string, @Body() appointmentDto: AppointmentDto) {
+    return this.appointmentsService.update(id, appointmentDto);
   }
 
   @Delete('customers/:customerId/appointments/:id')

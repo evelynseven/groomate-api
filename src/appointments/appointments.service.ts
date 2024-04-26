@@ -207,15 +207,14 @@ export class AppointmentsService {
     }
   }
 
-  async update(customerId: string, id: string, appointmentDto: AppointmentDto) {
+  async update(id: string, appointmentDto: AppointmentDto) {
     const appointment = await this.prisma.appointment.findUnique({
       where: {
-        customerId: customerId,
         id: id,
       },
     });
 
-    if (!appointment || appointment.customerId !== customerId)
+    if (!appointment)
       throw new ForbiddenException('Cannot find the appointment');
 
     return this.prisma.appointment.update({
@@ -225,6 +224,9 @@ export class AppointmentsService {
       data: {
         remarks: appointmentDto.remarks,
         appointmentTime: appointmentDto.appointmentTime,
+
+        associateId: appointmentDto.associateId,
+        baseServiceId: appointmentDto.baseServiceId,
       },
     });
   }
