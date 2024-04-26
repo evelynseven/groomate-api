@@ -14,7 +14,6 @@ export class PetsService {
         remarks: petDto.remarks,
         birthday: petDto.birthday,
         weight: petDto.weight,
-        groomRating: petDto.groomRating,
         rabiesDue: petDto.rabiesDue,
 
         ownerId: customerId,
