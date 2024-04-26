@@ -10,6 +10,7 @@ export class PetsService {
     const pet = await this.prisma.pet.create({
       data: {
         name: petDto.name,
+        type: petDto.type,
         remarks: petDto.remarks,
         birthday: petDto.birthday,
         weight: petDto.weight,
@@ -50,20 +51,29 @@ export class PetsService {
     }
   }
 
-  findOne(customerId: string, id: string) {
-    return this.prisma.pet.findFirst({
-      include: {
-        breed: {
-          select: {
-            name: true,
+  async findOne(customerId: string, id: string) {
+    try {
+      const pet = await this.prisma.pet.findFirst({
+        include: {
+          breed: {
+            select: {
+              name: true,
+            },
           },
         },
-      },
-      where: {
-        ownerId: customerId,
-        id: id,
-      },
-    });
+        where: {
+          ownerId: customerId,
+          id: id,
+        },
+      });
+      const petsWithNames = {
+        ...pet,
+        breed: pet.breed.name,
+      };
+      return petsWithNames;
+    } catch (error) {
+      console.error('Error fetching pet:', error);
+    }
   }
 
   async update(customerId: string, id: string, petDto: PetDto) {
@@ -83,6 +93,8 @@ export class PetsService {
       },
       data: {
         name: petDto.name,
+        type: petDto.type,
+        breedId: petDto.breedId,
         remarks: petDto.remarks,
         birthday: petDto.birthday,
         weight: petDto.weight,

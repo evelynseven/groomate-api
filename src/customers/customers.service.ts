@@ -52,6 +52,7 @@ export class CustomersService {
       data: {
         firstName: customerDto.firstName,
         lastName: customerDto.lastName,
+        fullName: `${customerDto.firstName} ${customerDto.lastName}`,
         phoneNumber: customerDto.phoneNumber,
         email: customerDto.email,
         remarks: customerDto.remarks,

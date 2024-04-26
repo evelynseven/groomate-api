@@ -63,10 +63,10 @@ model Pet {
   remarks String?
 
   name String
-  type BreedType @default(DOG)
+  type BreedType 
   birthday DateTime
   weight Float
-  groomRating GroomRating @default(NEUTRAL)
+  groomRating GroomRating 
   rabiesDue DateTime?
   isActive Boolean @default(true)
 
