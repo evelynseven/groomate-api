@@ -10,8 +10,8 @@ export class CustomerDto {
   @IsString()
   lastName: string;
 
-  @ApiProperty({ example: '437 340 7590' })
-  @IsPhoneNumber()
+  @ApiProperty({ example: '4373407590' })
+  // @IsPhoneNumber()
   @IsNotEmpty()
   phoneNumber: string;
 

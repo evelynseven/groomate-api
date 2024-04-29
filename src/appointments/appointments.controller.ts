@@ -62,25 +62,25 @@ export class AppointmentsController {
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Patch('appointments/:id/checkin')
+  @Put('appointments/:id/checkin')
   checkin(@Param('id') id: string) {
     return this.appointmentsService.checkin(id);
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Patch('appointments/:id/uncheckin')
+  @Put('appointments/:id/uncheckin')
   uncheckin(@Param('id') id: string) {
     return this.appointmentsService.uncheckin(id);
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Patch('appointments/:id/checkout')
+  @Put('appointments/:id/checkout')
   checkout(@Param('id') id: string) {
     return this.appointmentsService.checkout(id);
   }
 
   @ApiOkResponse({ type: AppointmentDto })
-  @Patch('appointments/:id/cancel')
+  @Put('appointments/:id/cancel')
   cancel(@Param('id') id: string) {
     return this.appointmentsService.cancel(id);
   }
