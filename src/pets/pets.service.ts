@@ -50,7 +50,7 @@ export class PetsService {
     }
   }
 
-  async findOne(customerId: string, id: string) {
+  async findOne(id: string) {
     try {
       const pet = await this.prisma.pet.findFirst({
         include: {
@@ -61,7 +61,6 @@ export class PetsService {
           },
         },
         where: {
-          ownerId: customerId,
           id: id,
         },
       });

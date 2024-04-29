@@ -20,7 +20,6 @@ export class AddOnServicesController {
 
   @ApiOkResponse({ type: AddOnServiceDto })
   @Post()
-  @Roles(Role.ADMIN)
   create(@Body() addOnServiceDto: AddOnServiceDto) {
     return this.addOnServicesService.create(addOnServiceDto);
   }
@@ -39,13 +38,11 @@ export class AddOnServicesController {
 
   @ApiOkResponse({ type: AddOnServiceDto })
   @Put(':id')
-  @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() addOnServiceDto: AddOnServiceDto) {
     return this.addOnServicesService.update(id, addOnServiceDto);
   }
 
   @Patch(':id')
-  @Roles(Role.ADMIN)
   deactivate(@Param('id') id: string) {
     return this.addOnServicesService.deactivate(id);
   }

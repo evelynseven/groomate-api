@@ -1,10 +1,18 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AppointmentDto } from './dto/index';
 import { PrismaService } from '../prisma/prisma.service';
+import { BaseServicesService } from '../baseServices/baseServices.service';
+import { BreedsService } from '../breeds/breeds.service';
+import { PetsService } from '../pets/pets.service';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private baseServicesService: BaseServicesService,
+    private petsService: PetsService,
+    private breedsService: BreedsService,
+  ) {}
 
   async create(customerId: string, appointmentDto: AppointmentDto) {
     let addOns = [];
@@ -15,6 +23,14 @@ export class AppointmentsService {
     const isoString = date.toISOString();
     console.log(isoString);
 
+    const baseService = await this.baseServicesService.findOne(
+      appointmentDto.baseServiceId,
+    );
+    const pet = await this.petsService.findOne(appointmentDto.petId);
+    const breed = await this.breedsService.findOne(pet.breedId);
+    // totalPrice = (baseService.basePrice * breed.coefficient) + addon.price
+    const servicePrice = baseService.basePrice * breed.coefficient;
+
     const appointment = await this.prisma.appointment.create({
       data: {
         remarks: appointmentDto.remarks,
@@ -24,6 +40,8 @@ export class AppointmentsService {
         petId: appointmentDto.petId,
         associateId: appointmentDto.associateId,
         baseServiceId: appointmentDto.baseServiceId,
+
+        totalPrice: servicePrice,
 
         addOns: { connect: addOns },
       },
@@ -217,6 +235,14 @@ export class AppointmentsService {
     if (!appointment)
       throw new ForbiddenException('Cannot find the appointment');
 
+    const baseService = await this.baseServicesService.findOne(
+      appointmentDto.baseServiceId,
+    );
+    const pet = await this.petsService.findOne(appointmentDto.petId);
+    const breed = await this.breedsService.findOne(pet.breedId);
+    // totalPrice = (baseService.basePrice * breed.coefficient) + addon.price
+    const servicePrice = baseService.basePrice * breed.coefficient;
+
     return this.prisma.appointment.update({
       where: {
         id: id,
@@ -224,6 +250,7 @@ export class AppointmentsService {
       data: {
         remarks: appointmentDto.remarks,
         appointmentTime: appointmentDto.appointmentTime,
+        totalPrice: servicePrice,
 
         associateId: appointmentDto.associateId,
         baseServiceId: appointmentDto.baseServiceId,

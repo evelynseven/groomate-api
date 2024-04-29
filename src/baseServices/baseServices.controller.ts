@@ -19,7 +19,6 @@ export class BaseServicesController {
 
   @ApiOkResponse({ type: BaseServiceDto })
   @Post()
-  @Roles(Role.ADMIN)
   create(@Body() baseServiceDto: BaseServiceDto) {
     return this.baseServicesService.create(baseServiceDto);
   }

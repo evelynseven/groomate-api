@@ -31,8 +31,8 @@ export class PetsController {
 
   @ApiOkResponse({ type: PetDto })
   @Get(':id')
-  findOne(@Param('customerId') customerId: string, @Param('id') id: string) {
-    return this.petsService.findOne(customerId, id);
+  findOne(@Param('id') id: string) {
+    return this.petsService.findOne(id);
   }
 
   @ApiOkResponse({ type: PetDto })
