@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Patch,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentDto } from './dto/index';
@@ -58,6 +59,30 @@ export class AppointmentsController {
   @Put('appointments/:id')
   update(@Param('id') id: string, @Body() appointmentDto: AppointmentDto) {
     return this.appointmentsService.update(id, appointmentDto);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
+  @Patch('appointments/:id/checkin')
+  checkin(@Param('id') id: string) {
+    return this.appointmentsService.checkin(id);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
+  @Patch('appointments/:id/uncheckin')
+  uncheckin(@Param('id') id: string) {
+    return this.appointmentsService.uncheckin(id);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
+  @Patch('appointments/:id/checkout')
+  checkout(@Param('id') id: string) {
+    return this.appointmentsService.checkout(id);
+  }
+
+  @ApiOkResponse({ type: AppointmentDto })
+  @Patch('appointments/:id/cancel')
+  cancel(@Param('id') id: string) {
+    return this.appointmentsService.cancel(id);
   }
 
   @Delete('appointments/:id')

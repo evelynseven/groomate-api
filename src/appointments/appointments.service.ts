@@ -258,6 +258,86 @@ export class AppointmentsService {
     });
   }
 
+  async checkin(id: string) {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!appointment)
+      throw new ForbiddenException('Cannot find the appointment');
+
+    return this.prisma.appointment.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: 'CHECKED_IN',
+      },
+    });
+  }
+
+  async uncheckin(id: string) {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!appointment)
+      throw new ForbiddenException('Cannot find the appointment');
+
+    return this.prisma.appointment.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: 'INCOMING',
+      },
+    });
+  }
+
+  async checkout(id: string) {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!appointment)
+      throw new ForbiddenException('Cannot find the appointment');
+
+    return this.prisma.appointment.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: 'CHECKED_OUT',
+      },
+    });
+  }
+
+  async cancel(id: string) {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!appointment)
+      throw new ForbiddenException('Cannot find the appointment');
+
+    return this.prisma.appointment.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: 'CANCELLED',
+      },
+    });
+  }
+
   async remove(id: string) {
     const appointment = await this.prisma.appointment.findUnique({
       where: {
