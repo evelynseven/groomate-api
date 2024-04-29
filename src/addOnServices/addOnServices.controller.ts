@@ -11,6 +11,8 @@ import {
 import { AddOnServicesService } from './addOnServices.service';
 import { AddOnServiceDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('addons')
 export class AddOnServicesController {
@@ -18,6 +20,7 @@ export class AddOnServicesController {
 
   @ApiOkResponse({ type: AddOnServiceDto })
   @Post()
+  @Roles(Role.ADMIN)
   create(@Body() addOnServiceDto: AddOnServiceDto) {
     return this.addOnServicesService.create(addOnServiceDto);
   }
@@ -36,16 +39,19 @@ export class AddOnServicesController {
 
   @ApiOkResponse({ type: AddOnServiceDto })
   @Put(':id')
+  @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() addOnServiceDto: AddOnServiceDto) {
     return this.addOnServicesService.update(id, addOnServiceDto);
   }
 
   @Patch(':id')
+  @Roles(Role.ADMIN)
   deactivate(@Param('id') id: string) {
     return this.addOnServicesService.deactivate(id);
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.addOnServicesService.remove(id);
   }

@@ -10,6 +10,8 @@ import {
 import { BreedsService } from './breeds.service';
 import { BreedDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('breeds')
 export class BreedsController {
@@ -17,6 +19,7 @@ export class BreedsController {
 
   @ApiOkResponse({ type: BreedDto })
   @Post()
+  @Roles(Role.ADMIN, Role.MANAGER)
   create(@Body() breedDto: BreedDto) {
     return this.breedsService.create(breedDto);
   }
@@ -35,11 +38,13 @@ export class BreedsController {
 
   @ApiOkResponse({ type: BreedDto })
   @Put(':id')
+  @Roles(Role.ADMIN, Role.MANAGER)
   update(@Param('id') id: string, @Body() breedDto: BreedDto) {
     return this.breedsService.update(id, breedDto);
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.breedsService.remove(id);
   }

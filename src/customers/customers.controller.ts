@@ -10,6 +10,8 @@ import {
 import { CustomersService } from './customers.service';
 import { CustomerDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('customers')
 export class CustomersController {
@@ -40,6 +42,7 @@ export class CustomersController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.customersService.remove(id);
   }

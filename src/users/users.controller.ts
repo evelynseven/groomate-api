@@ -19,30 +19,34 @@ export class UsersController {
 
   @ApiOkResponse({ type: UserDto })
   @Post()
+  @Roles(Role.ADMIN)
   create(@Body() userDto: UserDto) {
     return this.usersService.create(userDto);
   }
 
   @ApiOkResponse({ type: UserDto })
   @Get()
-  @Roles(Role.MANAGER)
+  @Roles(Role.MANAGER, Role.ADMIN)
   findAll() {
     return this.usersService.findAll();
   }
 
   @ApiOkResponse({ type: UserDto })
   @Get(':id')
+  @Roles(Role.MANAGER, Role.ADMIN)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   @ApiOkResponse({ type: UserDto })
   @Put(':id')
+  @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() userDto: UserDto) {
     return this.usersService.update(id, userDto);
   }
 
   @Delete(':id')
+  @Roles(Role.MANAGER, Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }

@@ -10,6 +10,8 @@ import {
 import { AppointmentsService } from './appointments.service';
 import { AppointmentDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @ApiOkResponse({ type: AppointmentDto })
 @Controller()
@@ -59,6 +61,7 @@ export class AppointmentsController {
   }
 
   @Delete('appointments/:id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.appointmentsService.remove(id);
   }

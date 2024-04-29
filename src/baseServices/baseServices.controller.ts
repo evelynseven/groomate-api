@@ -10,6 +10,8 @@ import {
 import { BaseServicesService } from './baseServices.service';
 import { BaseServiceDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('services')
 export class BaseServicesController {
@@ -17,6 +19,7 @@ export class BaseServicesController {
 
   @ApiOkResponse({ type: BaseServiceDto })
   @Post()
+  @Roles(Role.ADMIN)
   create(@Body() baseServiceDto: BaseServiceDto) {
     return this.baseServicesService.create(baseServiceDto);
   }
@@ -40,6 +43,7 @@ export class BaseServicesController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.baseServicesService.remove(id);
   }
