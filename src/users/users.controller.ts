@@ -10,6 +10,8 @@ import {
 import { UsersService } from './users.service';
 import { UserDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -23,6 +25,7 @@ export class UsersController {
 
   @ApiOkResponse({ type: UserDto })
   @Get()
+  @Roles(Role.MANAGER)
   findAll() {
     return this.usersService.findAll();
   }
