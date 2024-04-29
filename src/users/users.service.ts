@@ -9,6 +9,7 @@ export class UsersService {
 
   async create(userDto: UserDto) {
     const encryptedPwd = await argon.hash(userDto.password);
+    const trimmedEmail = userDto.email.toLowerCase();
     const user = await this.prisma.user.create({
       data: {
         firstName: userDto.firstName,
@@ -17,7 +18,7 @@ export class UsersService {
         phoneNumber: userDto.phoneNumber,
         role: userDto.role,
         hash: encryptedPwd,
-        email: userDto.email,
+        email: trimmedEmail,
         address: userDto.address,
         remarks: userDto.remarks,
       },
@@ -45,6 +46,15 @@ export class UsersService {
       },
     });
     delete user.hash;
+    return user;
+  }
+
+  async findOneByEmail(email: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
     return user;
   }
 
