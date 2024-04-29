@@ -18,10 +18,10 @@ import { APP_GUARD } from '@nestjs/core';
   ],
   providers: [
     AuthService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
   controllers: [AuthController],
   exports: [AuthService],
