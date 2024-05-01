@@ -1,1 +1,1 @@
-A salon management system.
+A pet salon management system
