@@ -26,14 +26,12 @@ export class UsersController {
 
   @ApiOkResponse({ type: UserDto })
   @Get()
-  @Roles(Role.MANAGER, Role.ADMIN)
   findAll() {
     return this.usersService.findAll();
   }
 
   @ApiOkResponse({ type: UserDto })
   @Get(':id')
-  @Roles(Role.MANAGER, Role.ADMIN)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
