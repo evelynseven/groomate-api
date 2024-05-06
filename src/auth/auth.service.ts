@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
@@ -16,7 +16,7 @@ export class AuthService {
     const isValid = await argon.verify(user.hash, pass);
 
     if (!isValid) {
-      throw new UnauthorizedException();
+      throw new ForbiddenException();
     }
 
     const payload = {
