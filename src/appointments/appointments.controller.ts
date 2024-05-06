@@ -6,7 +6,6 @@ import {
   Param,
   Delete,
   Put,
-  Patch,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentDto } from './dto/index';
