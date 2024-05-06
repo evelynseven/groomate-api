@@ -40,6 +40,6 @@ Groomate is a pet salon management system designed to streamline the daily opera
   - passport-jwt
   - @nestjs/swagger
 
-## Screenshots
+## Endpoints
 
 ![](screenshots/swagger-endpoints.png)
