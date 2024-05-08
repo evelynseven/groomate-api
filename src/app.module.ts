@@ -8,6 +8,8 @@ import { AddOnServicesModule } from './addOnServices/addOnServices.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { TestModuleModule } from './test-module/test-module.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { AuthModule } from './auth/auth.module';
     AppointmentsModule,
     UsersModule,
     AuthModule,
+    ConfigModule.forRoot(),
+    TestModuleModule,
   ],
 })
 export class AppModule {}
