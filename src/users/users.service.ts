@@ -59,7 +59,6 @@ export class UsersService {
   }
 
   async update(id: string, userDto: UserDto) {
-    const encryptedPwd = await argon.hash(userDto.password);
     const user = await this.prisma.user.findUnique({
       where: {
         id: id,
@@ -77,7 +76,6 @@ export class UsersService {
         lastName: userDto.lastName,
         fullName: `${userDto.firstName} ${userDto.lastName}`,
         phoneNumber: userDto.phoneNumber,
-        hash: encryptedPwd,
         email: userDto.email,
         role: userDto.role,
         address: userDto.address,
