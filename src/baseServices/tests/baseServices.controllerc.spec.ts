@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggerModule } from 'nestjs-pino';
 import { BaseServicesController } from '../baseServices.controller';
 import { BaseServicesService } from '../baseServices.service';
 
@@ -26,7 +25,6 @@ describe('BaseServicesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [LoggerModule.forRoot()],
       controllers: [BaseServicesController],
       providers: [
         {

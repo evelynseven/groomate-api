@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggerModule } from 'nestjs-pino';
 import { BreedsController } from '../breeds.controller';
 import { BreedsService } from '../breeds.service';
 import { BreedType } from '@prisma/client';
@@ -27,7 +26,6 @@ describe('BreedsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [LoggerModule.forRoot()],
       controllers: [BreedsController],
       providers: [
         {
