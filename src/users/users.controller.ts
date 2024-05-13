@@ -10,7 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { UserDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from '../auth/roles.decorator';
 import { Role } from '@prisma/client';
 
 @Controller('users')

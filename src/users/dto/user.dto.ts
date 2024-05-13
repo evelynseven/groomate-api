@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { IsEmail, IsPhoneNumber, IsString } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
 export class UserDto {
   @ApiProperty({ example: 'Aaron' })

@@ -10,7 +10,7 @@ import {
 import { BaseServicesService } from './baseServices.service';
 import { BaseServiceDto } from './dto/index';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from '../auth/roles.decorator';
 import { Role } from '@prisma/client';
 
 @Controller('services')
